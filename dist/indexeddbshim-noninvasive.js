@@ -3217,10 +3217,8 @@ IDBDatabase.prototype.transaction = function (storeNames
   }
 
   var objectStoreNames = _DOMStringList["default"].__createInstance();
-  console.log('storeNames', storeNames)
-  console.log('objectStoreNames', _this2.objectStoreNames)
+
   storeNames.forEach(function (storeName) {
-    console.log('currentStoreName', storeName)
     if (!_this2.objectStoreNames.contains(storeName)) {
       throw (0, _DOMException.createDOMException)('NotFoundError', 'The "' + storeName + '" object store does not exist');
     }
@@ -5229,8 +5227,6 @@ var IDBObjectStoreAlias = IDBObjectStore;
 
 IDBObjectStore.__createInstance = function (storeProperties, transaction) {
   function IDBObjectStore() {
-    console.log('storeProperties', storeProperties)
-    console.log('transaction', transaction)
     var me = this;
     me[Symbol.toStringTag] = 'IDBObjectStore';
     util.defineReadonlyProperties(this, readonlyProperties);
