@@ -3111,7 +3111,7 @@ IDBDatabase.prototype.createObjectStore = function (storeName
     throw (0, _DOMException.createDOMException)('ConstraintError', 'Object store "' + storeName + '" already exists in ' + this.name);
   }
 
-  var autoInc = true;
+  var autoInc = createOptions.autoIncrement;
 
   if (autoInc && (keyPath === '' || Array.isArray(keyPath))) {
     throw (0, _DOMException.createDOMException)('InvalidAccessError', 'With autoIncrement set, the keyPath argument must not be an array or empty string.');
