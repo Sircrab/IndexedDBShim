@@ -4324,7 +4324,7 @@ IDBIndex.__createInstance = function (store, indexProperties) {
         storeHandle.__indexHandles[newName] = oldIndexHandle; // Ensure new reference accessible
 
         me.__pendingName = oldName;
-        var colInfoToPreserveArr = [['key', 'BLOB ' + (objectStore.autoIncrement  ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY')], ['value', 'BLOB']].concat(_toConsumableArray(objectStore.indexNames).filter(function (indexName) {
+        var colInfoToPreserveArr = [['key', 'BLOB ' + (objectStore.autoIncrement ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY')], ['value', 'BLOB']].concat(_toConsumableArray(objectStore.indexNames).filter(function (indexName) {
           return indexName !== newName;
         }).map(function (indexName) {
           return [util.escapeIndexNameForSQL(indexName), 'BLOB'];
