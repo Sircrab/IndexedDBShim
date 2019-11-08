@@ -4324,7 +4324,7 @@ IDBIndex.__createInstance = function (store, indexProperties) {
         storeHandle.__indexHandles[newName] = oldIndexHandle; // Ensure new reference accessible
 
         me.__pendingName = oldName;
-        var colInfoToPreserveArr = [['key', 'BLOB ' + (true ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY')], ['value', 'BLOB']].concat(_toConsumableArray(objectStore.indexNames).filter(function (indexName) {
+        var colInfoToPreserveArr = [['key', 'BLOB ' + (objectStore.autoIncrement  ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY')], ['value', 'BLOB']].concat(_toConsumableArray(objectStore.indexNames).filter(function (indexName) {
           return indexName !== newName;
         }).map(function (indexName) {
           return [util.escapeIndexNameForSQL(indexName), 'BLOB'];
@@ -5338,7 +5338,7 @@ IDBObjectStore.__clone = function (store, transaction) {
   var newStore = IDBObjectStore.__createInstance({
     name: store.__currentName,
     keyPath: Array.isArray(store.keyPath) ? store.keyPath.slice() : store.keyPath,
-    autoInc: true,
+    autoInc: store.autoIncrement,
     indexList: {},
     idbdb: store.__idbdb,
     cursors: store.__cursors
@@ -5388,12 +5388,12 @@ IDBObjectStore.__createObjectStore = function (db, store) {
 
     var escapedStoreNameSQL = util.escapeStoreNameForSQL(storeName); // key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE
 
-    var sql = ['CREATE TABLE', escapedStoreNameSQL, '(key BLOB', true ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY', ', value BLOB)'].join(' ');
+    var sql = ['CREATE TABLE', escapedStoreNameSQL, '(key BLOB', store.autoIncrement ? 'UNIQUE, inc INTEGER PRIMARY KEY AUTOINCREMENT' : 'PRIMARY KEY', ', value BLOB)'].join(' ');
     _CFG["default"].DEBUG && console.log(sql);
     tx.executeSql(sql, [], function (tx, data) {
       function insertStoreInfo() {
         var encodedKeyPath = JSON.stringify(store.keyPath);
-        tx.executeSql('INSERT INTO __sys__ VALUES (?,?,?,?,?)', [util.escapeSQLiteStatement(storeName), encodedKeyPath, true, '{}', 1], function () {
+        tx.executeSql('INSERT INTO __sys__ VALUES (?,?,?,?,?)', [util.escapeSQLiteStatement(storeName), encodedKeyPath, store.autoIncrement, '{}', 1], function () {
           delete store.__pendingCreate;
           delete store.__deleted;
           success(store);
