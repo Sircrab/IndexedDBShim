@@ -142,7 +142,7 @@
     "is-date-object": "1.0.1",
     "isomorphic-fetch": "^2.2.1",
     "js-polyfills": "git+https://github.com/brettz9/polyfill.git#node",
-    "jsdom": "15.1.1",
+    "jsdom": "16.5.0",
     "local-xmlhttprequest": "2.0.0",
     "mapstraction": "git+https://github.com/brettz9/mapstraction.git#relativePaths",
     "mocha": "6.2.0",
